@@ -1,0 +1,16 @@
+BDD " Echec "
+
+Table " Joueur "
+Idjoueur | Pseudo | Mdp | Email
+
+Table " Jeu "
+Id partie | id joueur | id joueur 2
+
+Table " Piece "
+IdPiece | TypePiece | couleur
+
+Table " position "
+id piece | id partie | idJoueur | position
+
+Table " Sauvegarde "
+IdJoueur | Lien sauvegarde 
