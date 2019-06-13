@@ -1,7 +1,11 @@
-BDD " Echec "
+Role :  Echec mdp echec
+
+BDD " jeux echec "
 
 Table " Joueur "
 Idjoueur | Pseudo | Mdp | Email
+
+Regle = INSERT 
 
 Table " Jeu "
 Id partie | id joueur | id joueur 2
