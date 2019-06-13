@@ -35,6 +35,16 @@ on affichera toutes les pieces sur les nouvelles positions coté utilisateur.
 -a vous de trouver
 """
 
-class piece(self,couleur,type,position,etat,moved):
-    def __init__ (self, couleur, type, position, etat, moved):
+class piece():
+    def __init__ (self, couleur, typePiece, position):
+        self.couleur = couleur #blanc ou noir
+        self.typePiece= typePiece  # king queen bishop cavalier tour pion
+        self.position= position # coordonnées
+        self.enjeu=True #enjeu ou pas (pris)
+        self.moved=False # a bougé (True) ou non (False)
+    def mouvement(arrivee):
+        self.position=arrivee
+        self.moved=True
+     
+
         
