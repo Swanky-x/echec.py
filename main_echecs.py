@@ -34,6 +34,8 @@ on affichera toutes les pieces sur les nouvelles positions coté utilisateur.
 -systeme de sauvegarde de partie coté serveur
 -a vous de trouver
 """
+liste_pieces=[]
+liste_positions=[]
 
 class piece():
     def __init__ (self, couleur, typePiece, position):
@@ -43,8 +45,13 @@ class piece():
         self.enjeu=True #enjeu ou pas (pris)
         self.moved=False # a bougé (True) ou non (False)
     def mouvement(arrivee):
-        self.position=arrivee
-        self.moved=True
-     
+        self.position=arrivee 
+        self.moved=True #on change l'état du moved pour marquer que la pièce a bougé (pour le roc)
 
-        
+#J'ai besoin que tous les objets pièces soient dans une liste liste_pieces
+# pour pouvoir faire une liste des positions liste_positions
+#pour ensuite tester ces positions dans les mouvements
+
+for i in liste_pieces:
+    liste_positions.append(i.position)
+
