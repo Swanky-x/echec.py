@@ -20,7 +20,7 @@ on affichera toutes les pieces sur les nouvelles positions coté utilisateur.
 
 
                SERVEUR
-            /          \
+            /          
            / "fou A3"    \ "fou A3"
     player1              player2       ----> *affiche le fou en A3*
 
@@ -35,12 +35,33 @@ on affichera toutes les pieces sur les nouvelles positions coté utilisateur.
 -a vous de trouver
 """
 
+
 liste_pieces=[]
 liste_positions=[]
 liste_positions_noire=[]
 liste_positions_blanche=[]
 liste_colonnes=("A","B","C","D","E","F","G","H")
 liste_lignes=(1,2,3,4,5,6,7,8)
+
+cadre=[]
+for i in 1,2,3,4,5,6,7,8:
+    for j in 1,2,3,4,5,6,7,8:
+        cadre.append(int(f"{i}{j}"))
+
+print(cadre)
+
+def surLePlateau(case):
+    if case in cadre:
+        print(case,"est sur le plateau")
+        return True
+    else:
+        print(case, "n'est pas sur le plateau")
+
+surLePlateau(88)
+surLePlateau(59)
+
+
+
 class piece():
     def __init__ (self, couleur, typePiece, position):
         self.couleur = couleur #blanc ou noir
@@ -50,8 +71,10 @@ class piece():
         self.moved=False # a bougé (True) ou non (False)
         self.controle=[] #liste des cases sur laquelle la pièce peut se déplacer ou prendre une pièce
     def mouvement(arrivee):
-        self.position=arrivee 
-        self.moved=True #on change l'état du moved pour marquer que la pièce a bougé (pour le roc)
+        # TODO : vérifier que le mouvement appartient à la liste de self.controle
+        if arrivee in self.controle:
+            self.position=arrivee 
+            self.moved=True # on change l'état du moved pour marquer que la pièce a bougé (pour le roc ou le pion)
     def casescontrolees():
         pass
     
@@ -59,7 +82,8 @@ class piece():
 # pour pouvoir faire une liste des positions liste_positions
 # pour ensuite tester ces positions dans les mouvements
 
-
+v=piece('blanc','pion','A2')
+#piece('pionN1','noir','pion','B3')
 for i in liste_pieces:
     liste_positions.append(i.position)
     if i.couleur=="blanc":
@@ -69,8 +93,10 @@ for i in liste_pieces:
 
 
 #essai de programmation des mouvements
+#ou plutôt des cases valides pour un déplacement
 
 def casescontrolees():
+    #si la pièce est un pion
     if self.typePiece=="pion":
         #le pion ne peux qu'avancer tout droit
         #ou prendre en biais
@@ -82,8 +108,43 @@ def casescontrolees():
             if (colonne,ligne+1) not in liste_positions:
                 self.casescontrolees.append((colonne,ligne+1))
             #case avant gauche
-            if colonne!="A" and 
+            #Si on est pas sur le bord gauche, on regarde la case avant gauche,
+            #si elle n'est pas occupée par une pièce de notre couleur
+            coordtemp = (liste_colonnes[index(colonne)-1],liste_lignes[index(ligne)+1])
+            if colonne!="A" and temp in liste_positions_noire:
+                self.casescontrolees.append((coordtemp))
             #case avant droite
+            coordtemp = (liste_colonnes[index(colonne)+1],liste_lignes[index(ligne)+1])
+            if colonne!="H" and temp in liste_positions_noire:
+                self.casescontrolees.append((coordtemp))
+            # 2 cases devant pour le premier mouvement du pion
+            if self.moved==False:
+                coordtemp = (liste_colonnes[index(colonne)],liste_lignes[index(ligne)+2])
+                if coordtemp not in liste_positions:
+                    self.casescontrolees.append(coordtemp)
+        if self.couleur=="noir":
+            colonne=self.position[0]
+            ligne=self.position[1]
+            #case devant
+            if (colonne,ligne-1) not in liste_positions:
+                self.casescontrolees.append((colonne,ligne-1))
+            #case avant gauche
+            #Si on est pas sur le bord gauche, on regarde la case avant gauche,
+            #si elle n'est pas occupée par une pièce de notre couleur
+            if colonne!="A" and temp in liste_positions_blanche:
+                coordtemp = (liste_colonnes[index(colonne)-1],liste_lignes[index(ligne)-1])
+                self.casescontrolees.append((coordtemp))
+            #case avant gauche
+            if colonne!="H" and temp in liste_positions_blanche:
+                coordtemp = (liste_colonnes[index(colonne)+1],liste_lignes[index(ligne)-1])
+                self.casescontrolees.append((coordtemp))
+            # 2 cases devant pour le premier mouvement du pion
+            if self.moved==False:
+                coordtemp = (liste_colonnes[index(colonne)],liste_lignes[index(ligne)-2])
+                if coordtemp not in liste_positions:
+                    self.casescontrolees.append(coordtemp)
+
+
 
 
 
