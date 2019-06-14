@@ -63,13 +63,14 @@ surLePlateau(59)
 
 
 class piece():
-    def __init__ (self, couleur, typePiece, position):
-        self.couleur = couleur #blanc ou noir
-        self.typePiece= typePiece  # king queen bishop cavalier tour pion
+    def __init__ (self,position):
+        self.couleur = 'requete sql' #blanc ou noir
+        self.typePiece= typePiece  # king queen fou cavalier tour pion
         self.position= position # coordonnées
         self.enjeu=True #enjeu ou pas (pris)
         self.moved=False # a bougé (True) ou non (False)
         self.controle=[] #liste des cases sur laquelle la pièce peut se déplacer ou prendre une pièce
+        self.echec=False #pour le roi 
     def mouvement(arrivee):
         # TODO : vérifier que le mouvement appartient à la liste de self.controle
         if arrivee in self.controle:
@@ -82,70 +83,138 @@ class piece():
 # pour pouvoir faire une liste des positions liste_positions
 # pour ensuite tester ces positions dans les mouvements
 
-v=piece('blanc','pion','A2')
-#piece('pionN1','noir','pion','B3')
-for i in liste_pieces:
-    liste_positions.append(i.position)
-    if i.couleur=="blanc":
-        liste_positions_blanche.append(i.position)
-    else:
-        liste_positions_noire.append(i.position)
-
+# v=piece('blanc','pion',11)
+# w=piece('noir','pion',56)
+# liste_pieces.append(v)
+# liste_pieces.append(w)
+# for i in liste_pieces:
+#     liste_positions.append(i.position)
+#     if i.couleur=="blanc":
+#         liste_positions_blanche.append(i.position)
+#     else:
+#         liste_positions_noire.append(i.position)
+# print(v)
+# print(liste_positions)
+# print(liste_positions_blanche)
+# print(liste_positions_noire)
 
 #essai de programmation des mouvements
 #ou plutôt des cases valides pour un déplacement
 
-def casescontrolees():
-    #si la pièce est un pion
-    if self.typePiece=="pion":
-        #le pion ne peux qu'avancer tout droit
-        #ou prendre en biais
-        #en fonction de sa couleur : vers le haut pour les blancs, vers le bas pour les noirs
-        if self.couleur=="blanc":
-            colonne=self.position[0]
-            ligne=self.position[1]
-            #case devant
-            if (colonne,ligne+1) not in liste_positions:
-                self.casescontrolees.append((colonne,ligne+1))
-            #case avant gauche
-            #Si on est pas sur le bord gauche, on regarde la case avant gauche,
-            #si elle n'est pas occupée par une pièce de notre couleur
-            coordtemp = (liste_colonnes[index(colonne)-1],liste_lignes[index(ligne)+1])
-            if colonne!="A" and temp in liste_positions_noire:
-                self.casescontrolees.append((coordtemp))
-            #case avant droite
-            coordtemp = (liste_colonnes[index(colonne)+1],liste_lignes[index(ligne)+1])
-            if colonne!="H" and temp in liste_positions_noire:
-                self.casescontrolees.append((coordtemp))
-            # 2 cases devant pour le premier mouvement du pion
-            if self.moved==False:
-                coordtemp = (liste_colonnes[index(colonne)],liste_lignes[index(ligne)+2])
-                if coordtemp not in liste_positions:
-                    self.casescontrolees.append(coordtemp)
-        if self.couleur=="noir":
-            colonne=self.position[0]
-            ligne=self.position[1]
-            #case devant
-            if (colonne,ligne-1) not in liste_positions:
-                self.casescontrolees.append((colonne,ligne-1))
-            #case avant gauche
-            #Si on est pas sur le bord gauche, on regarde la case avant gauche,
-            #si elle n'est pas occupée par une pièce de notre couleur
-            if colonne!="A" and temp in liste_positions_blanche:
-                coordtemp = (liste_colonnes[index(colonne)-1],liste_lignes[index(ligne)-1])
-                self.casescontrolees.append((coordtemp))
-            #case avant gauche
-            if colonne!="H" and temp in liste_positions_blanche:
-                coordtemp = (liste_colonnes[index(colonne)+1],liste_lignes[index(ligne)-1])
-                self.casescontrolees.append((coordtemp))
-            # 2 cases devant pour le premier mouvement du pion
-            if self.moved==False:
-                coordtemp = (liste_colonnes[index(colonne)],liste_lignes[index(ligne)-2])
-                if coordtemp not in liste_positions:
-                    self.casescontrolees.append(coordtemp)
+# def casescontrolees():
+#     #si la pièce est un pion
+#     if self.typePiece=="pion":
+#         #le pion ne peux qu'avancer tout droit
+#         #ou prendre en biais
+#         #en fonction de sa couleur : vers le haut pour les blancs, vers le bas pour les noirs
+#         if self.couleur=="blanc":
+#             colonne=self.position[0]
+#             ligne=self.position[1]
+#             #case devant
+#             if (colonne,ligne+1) not in liste_positions:
+#                 self.casescontrolees.append((colonne,ligne+1))
+#             #case avant gauche
+#             #Si on est pas sur le bord gauche, on regarde la case avant gauche,
+#             #si elle n'est pas occupée par une pièce de notre couleur
+#             coordtemp = (liste_colonnes[index(colonne)-1],liste_lignes[index(ligne)+1])
+#             if colonne!="A" and temp in liste_positions_noire:
+#                 self.casescontrolees.append((coordtemp))
+#             #case avant droite
+#             coordtemp = (liste_colonnes[index(colonne)+1],liste_lignes[index(ligne)+1])
+#             if colonne!="H" and temp in liste_positions_noire:
+#                 self.casescontrolees.append((coordtemp))
+#             # 2 cases devant pour le premier mouvement du pion
+#             if self.moved==False:
+#                 coordtemp = (liste_colonnes[index(colonne)],liste_lignes[index(ligne)+2])
+#                 if coordtemp not in liste_positions:
+#                     self.casescontrolees.append(coordtemp)
+#         if self.couleur=="noir":
+#             colonne=self.position[0]
+#             ligne=self.position[1]
+#             #case devant
+#             if (colonne,ligne-1) not in liste_positions:
+#                 self.casescontrolees.append((colonne,ligne-1))
+#             #case avant gauche
+#             #Si on est pas sur le bord gauche, on regarde la case avant gauche,
+#             #si elle n'est pas occupée par une pièce de notre couleur
+#             if colonne!="A" and temp in liste_positions_blanche:
+#                 coordtemp = (liste_colonnes[index(colonne)-1],liste_lignes[index(ligne)-1])
+#                 self.casescontrolees.append((coordtemp))
+#             #case avant gauche
+#             if colonne!="H" and temp in liste_positions_blanche:
+#                 coordtemp = (liste_colonnes[index(colonne)+1],liste_lignes[index(ligne)-1])
+#                 self.casescontrolees.append((coordtemp))
+#             # 2 cases devant pour le premier mouvement du pion
+#             if self.moved==False:
+#                 coordtemp = (liste_colonnes[index(colonne)],liste_lignes[index(ligne)-2])
+#                 if coordtemp not in liste_positions:
+#                     self.casescontrolees.append(coordtemp)
 
 
+# valeur de départ
+# valeur d'arrivée
 
+caseDepart=0
+caseArrivee=0
+
+active=piece(caseDepart)
+
+def mvtPion(pieceActive):
+    patern=[]
+    if pieceActive.couleur='blanc':
+        patern.append(pieceActive.position+1)
+        patern.append(pieceActive.position+11)
+        patern.append(pieceActive.position+9)
+        if pieceActive.moved==False:
+            patern.append(pieceActive+2)
+    if pieceActive.couleur='noir':
+        patern.append(pieceActive.position-1)
+        patern.append(pieceActive.position-11)
+        patern.append(pieceActive.position-9)
+        if pieceActive.moved==False:
+            patern.append(pieceActive-2)
+    return patern
+
+def mvtTour(pieceActive):
+    patern=[]
+    for i in -7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7:
+        patern.append(pieceActive.position+10*i)
+        patern.append(pieceActive.position+1*i)
+    return patern
+
+def mvtFou(pieceActive):
+    patern=[]
+    for i in -7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7:
+        patern.append(pieceActive.position+11*i)
+        patern.append(pieceActive.position+9*i)
+    return patern
+
+def mvtQueen(pieceActive):
+    patern=[]
+    for i in -7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7:
+        patern.append(pieceActive.position+11*i)
+        patern.append(pieceActive.position+9*i)
+        patern.append(pieceActive.position+10*i)
+        patern.append(pieceActive.position+1*i)
+    return patern
+
+def mvtCavalier(pieceActive):
+    patern=[]
+    for i in -21,-19,-12,-8,8,12,19,21:
+        patern.append(pieceActive.position+i)
+    return patern
+
+def mvtKing(pieceActive):
+    patern=[]
+    for i in -1,1:
+        patern.append(pieceActive.position+11*i)
+        patern.append(pieceActive.position+9*i)
+        patern.append(pieceActive.position+10*i)
+        patern.append(pieceActive.position+1*i)
+    return patern
+
+def mvt(pieceActive):
+    
 
 
 """
