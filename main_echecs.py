@@ -180,7 +180,10 @@ def mvtTour(pieceActive):
     patern=[]
     for i in -7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7:
         patern.append(pieceActive.position+10*i)
-        patern.append(pieceActive.position+1*i)
+    for i in range(10):
+        dizaine=pieceActive.position//10
+        dizaine=dizaine*10
+        patern.append(dizaine+i) #la colonne c'est mauvais, il faudrait rester dans la dizaine
     patern.sort()
     return patern
 #mvt du fou
@@ -198,8 +201,12 @@ def mvtQueen(pieceActive):
         patern.append(pieceActive.position+11*i)
         patern.append(pieceActive.position+9*i)
         patern.append(pieceActive.position+10*i)
-        patern.append(pieceActive.position+1*i)
+    for i in range(10):
+        dizaine=pieceActive.position//10
+        dizaine=dizaine*10
+        patern.append(dizaine+i) #la colonne c'est mauvais, il faudrait rester dans la dizaine
     patern.sort()
+    print(patern)
     return patern
 #mvt du cavalier
 def mvtCavalier(pieceActive):
@@ -315,10 +322,10 @@ def leChemin(pieceActive, caseArrivee):
 
 
 
-active=piece('blanc','fou',22)
+active=piece('blanc','tour',22)
 # mvt(active)
 # checkmvt(active, 55)
-leChemin(active,31)
+leChemin(active,28)
 
 
 """
