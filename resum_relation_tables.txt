@@ -1,4 +1,4 @@
-jeuxechec=# \dt
+jeuxechec=> \d
           List of relations
  Schema |   Name   | Type  |  Owner   
 --------+----------+-------+----------
@@ -9,7 +9,9 @@ jeuxechec=# \dt
  public | save     | table | postgres
 (5 rows)
 
-jeuxechec=# \d jeux
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> \d jeux
                   Table "public.jeux"
    Column   |  Type   | Collation | Nullable | Default 
 ------------+---------+-----------+----------+---------
@@ -19,9 +21,13 @@ jeuxechec=# \d jeux
 Indexes:
     "jeux_pkey" PRIMARY KEY, btree (id_partie)
 Referenced by:
+    TABLE ""position"" CONSTRAINT "position_id_partie_fkey" FOREIGN KEY (id_partie) REFERENCES jeux(id_partie)
     TABLE "save" CONSTRAINT "save_id_partie_fkey" FOREIGN KEY (id_partie) REFERENCES jeux(id_partie)
 
-jeuxechec=# \d joueurs
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> \d joueurs
                      Table "public.joueurs"
   Column   |       Type        | Collation | Nullable | Default 
 -----------+-------------------+-----------+----------+---------
@@ -32,7 +38,10 @@ jeuxechec=# \d joueurs
 Indexes:
     "joueurs_pkey" PRIMARY KEY, btree (id_joueur)
 
-jeuxechec=# \d pieces
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> \d pieces
                      Table "public.pieces"
   Column  |       Type        | Collation | Nullable | Default 
 ----------+-------------------+-----------+----------+---------
@@ -44,18 +53,27 @@ Indexes:
 Referenced by:
     TABLE ""position"" CONSTRAINT "position_id_piece_fkey" FOREIGN KEY (id_piece) REFERENCES pieces(id_piece)
 
-jeuxechec=# \d position
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> \d position
                Table "public.position"
   Column   |  Type   | Collation | Nullable | Default 
 -----------+---------+-----------+----------+---------
  id_piece  | integer |           |          | 
- id_partie | integer |           |          | 
+ id_partie | integer |           | not null | 
  id_joueur | integer |           |          | 
  position  | text    |           |          | 
+Indexes:
+    "position_pkey" PRIMARY KEY, btree (id_partie)
 Foreign-key constraints:
+    "position_id_partie_fkey" FOREIGN KEY (id_partie) REFERENCES jeux(id_partie)
     "position_id_piece_fkey" FOREIGN KEY (id_piece) REFERENCES pieces(id_piece)
 
-jeuxechec=# \d save
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> 
+jeuxechec=> \d save
                  Table "public.save"
   Column   |  Type   | Collation | Nullable | Default 
 -----------+---------+-----------+----------+---------
@@ -65,3 +83,5 @@ Indexes:
     "save_pkey" PRIMARY KEY, btree (id_partie)
 Foreign-key constraints:
     "save_id_partie_fkey" FOREIGN KEY (id_partie) REFERENCES jeux(id_partie)
+
+
