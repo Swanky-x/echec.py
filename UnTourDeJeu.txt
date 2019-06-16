@@ -1,0 +1,39 @@
+
+########### Depart ########### 
+Etape 1  :
+Lancement de l'interface du jeu (<-- Lilian)
+
+Etape 1 bis : (pour plus tard)
+Login ou creation de compte 
+===> interface envoie les info à la bdd (<== Lilian)
+    ==> pour le Login : "pseudo" "mdps" 
+    ==> Pour l'inscription : "pseudo" "mdps" "mail"
+===> le serveur identifie l'ip et l'envoie à la bd (<== Xavier)
+    ===> XXX.XXX.XXX.XXX
+
+Etape 2 :
+Initialisation de la partie
+===> la bdd envoie la position initial de chaque piece (<== Xavier)
+    ===> sous forme de liste (permettras d'anticiper sur un chargement d'une partie arreter)
+==> creation de la vue de depart ou recharger (<== Lilian)
+
+########### Tour ###########
+
+clique pion depart
+===> envoie affichages des coordoonées a bdd (<== Lilian)
+===> envoie bdd , des info de la piece et sa coordonnés a la base.py (<== Xavier)
+deplacement
+===> base.py test les mouvements possible en fonction de la piece (<== Kevin)
+===> base.py interroge les coordonnés afin de savoir si mouvements possible (<== Kevin)
+===> base.py retourne toutes les positions de mouvement possible (affichage sur le plateau possible) (<== Kevin)
+===> base.py confirme le deplacement (<== Kevin)
+clique pion arriver
+===> affichage envoie à Bdd les coordonnés (<== Lilian)
+===> envoie bdd , des info de la piece et sa coordonnés a la base.py (<== Xavier)
+===> base.Py tue la piece si piece il y a (<== Kevin)
+===> base.Py informe Bdd si une piece est morte avec les coordonnés (<== Kevin)
+===> bdd mais à jour les position (piece qui ce deplace et piece morte) (<== Xavier)
+===> bdd renvoie les positions modifié à affichage (<== Xavier)
+===> affichage mais à jour le visuel (<== Lilian)
+
+On recommence jusqu'as ce que la base.Py annonce l'echec ou l'affichage annonce l'abandon (<== Kevin)(<== Lilian)
