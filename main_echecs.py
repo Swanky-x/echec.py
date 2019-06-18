@@ -41,15 +41,15 @@ def mvtPion(pieceActive):
     if pieceActive.couleur=='blanc':
         patern.append(pieceActive.position+1)
         patern.append(pieceActive.position+11)
-        patern.append(pieceActive.position+9)
+        patern.append(pieceActive.position-9)
         if pieceActive.moved==False:
             patern.append(pieceActive.position+2)
     if pieceActive.couleur=='noir':
         patern.append(pieceActive.position-1)
         patern.append(pieceActive.position-11)
-        patern.append(pieceActive.position-9)
+        patern.append(pieceActive.position+9)
         if pieceActive.moved==False:
-            patern.append(pieceActive-2)
+            patern.append(pieceActive.position-2)
     patern.sort()
     return patern
 
@@ -127,7 +127,7 @@ def mvtKing(pieceActive):
 #la fonction mvt calcule les trajectoires de la pièce
 def mvt(pieceActive):
     if active.typePiece=='pion':
-        # print (mvtPion(pieceActive))
+        print (mvtPion(pieceActive))
         return mvtPion(pieceActive)
     if active.typePiece=='tour':
         # print (mvtTour(pieceActive))
@@ -168,7 +168,7 @@ def checkmvt(pieceActive, caseArrivee):
 def lesTrajectoires(pieceActive):
     # if not checkmvt(pieceActive,caseArrivee):
     #     return False
-    if pieceActive.typePiece=='king' or pieceActive.typePiece=='cavalier':
+    if pieceActive.typePiece=='king' or pieceActive.typePiece=='cavalier' or pieceActive.typePiece=='pion':
         print("pas d'obstacle pour le roi ou le cavalier")
         chemin=[]
         chemin=mvtPlateau(pieceActive)
@@ -267,7 +267,7 @@ def leChemin(pieceActive, caseArrivee):
 
 
 #POUR TESTER AVANT D AVOIR TOUT FINI
-active=piece('blanc','queen',44)
+active=piece('noir','pion',44)
 # mvt(active)
 # checkmvt(active, 55)
 #leChemin(active,26)
