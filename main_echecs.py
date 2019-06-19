@@ -56,11 +56,11 @@ def mvtPion(pieceActive):
 #mvt de la tour
 def mvtTour(pieceActive):
     patern=[]
-    for i in 1,2,3,4,5,6,7:
+    for i in 1,2,3,4,5,6,7,8:
         patern.append(pieceActive.position+10*i)
         if pieceActive.position+10*i in bordDuCadre: break
     print(patern)
-    for i in -1,-2,-3,-4,-5,-6,-7:
+    for i in -1,-2,-3,-4,-5,-6,-7,-8:
         patern.append(pieceActive.position+10*i)
         if pieceActive.position+10*i in bordDuCadre: break
     print(patern)
@@ -148,7 +148,8 @@ def mvt(pieceActive):
 def mvtPlateau(pieceActive):
     global cadre
     patern=[]
-    for i in mvt(pieceActive):
+    temp=mvt(pieceActive)
+    for i in temp:
         if i in cadre:
             patern.append(i)
     print("les cases où on peut aller :", patern)
@@ -158,7 +159,8 @@ def mvtPlateau(pieceActive):
 
 #check mouvement vérifie que la caseArrivee est sur les trajectoire de la pièce
 def checkmvt(pieceActive, caseArrivee):
-    if caseArrivee in mvtPlateau(pieceActive):
+    temp=mvtPlateau(pieceActive)
+    if caseArrivee in temp:
         print ("mouvement correct")
         return True
     else:
@@ -174,8 +176,9 @@ def lesTrajectoires(pieceActive):
         chemin=mvtPlateau(pieceActive)
         return chemin
     mvtBordDuCadre=[]
+    temp=mvt(pieceActive)
     for i in bordDuCadre:
-        if i in mvt(pieceActive) and i not in mvtBordDuCadre:
+        if i in temp and i not in mvtBordDuCadre:
                 mvtBordDuCadre.append(i)
     print("les cases où la pièce sort du cadre : ", mvtBordDuCadre)
     tousChemins=[]
@@ -215,11 +218,36 @@ def lesTrajectoires(pieceActive):
     print("toutes les trajectoires de la pièce ", pieceActive.typePiece, " à partir de la position ",pieceActive.position," : ", tousChemins)
     return tousChemins
 
+# lestrajectoires valides = les cases cliquables où notre pièce peut aller
+# == aussi la zone de controle, qui sera utile pour la definition de l'echec
+def lesTrajectoiresValides(pieceActive):
+    # pour chaque liste, dans l'ordre :
+    # vérifier dans la bdd si la case est libre
+    # si elle n'est pas libre vérifier si la couleur est prenable
+    # si elle est prenable, ajouter cette case dans les destinations et sortir de la boucle
+    # ajouter la liste à la liste des trajectoires
+    
+    #sortir les listes de liste
+    for i in lesTrajectoires(pieceActive):
+        print("on va regarder la trajectoire ", i)
+        for j in i:
+            print("on regarde la case ",j)
+            # pour savoir si il y a une pièce dessus on regarde avec rowcount
+            # https://openclassrooms.com/forum/sujet/savoir-si-une-requete-sql-renvoie-des-informations-53841
+            if j in cadre:
+                print("la case est dans le cadre")
+            else:
+                print("la case n'est pas dans le cadre")
+            
+    
+    pass
+
 
 
 
 
 #la fonction chemin donne le chemin le plus direct pour aller à la destination
+# inclut la destination
 def leChemin(pieceActive, caseArrivee):
     if not checkmvt(pieceActive,caseArrivee):
         return False
@@ -228,11 +256,11 @@ def leChemin(pieceActive, caseArrivee):
         chemin=[]
         return chemin
     difference=abs(pieceActive.position-caseArrivee)
-    print(difference)
+    print("difference : ",difference)
     for i in 11,10,9:
         if difference%i==0:
             quotient=i
-            print (quotient)
+            print ("quotient : ", quotient)
     if difference%11==0 or difference%10==0 or difference%9==0:
         pass
     else:
@@ -245,7 +273,7 @@ def leChemin(pieceActive, caseArrivee):
             temp=pieceActive.position+i*quotient
             chemin.append(temp)
             i+=1
-            print(temp)
+            print("phase ascendante : ",temp)
         chemin.sort()
     if pieceActive.position > caseArrivee:
         temp=0
@@ -254,22 +282,37 @@ def leChemin(pieceActive, caseArrivee):
             temp=pieceActive.position-i*quotient
             chemin.append(temp)
             i+=1
-            print(temp)
+            print("phase descendante : ",temp)
         chemin.sort(reverse=True)
     #on sort la desitination de la liste
-    chemin.pop()
+    #chemin.pop()
     print(chemin)
     return chemin
 
-#la maintenant on va taper dans la bdd
+# la maintenant on va taper dans la bdd
 # pour vérifier les positions du chemin et vérifier qu'il n'y a rien sur le chemin
-#def verifObstacle(pieceActive, caseArrivee):
+# def verifObstacle(pieceActive, caseArrivee):
+
+
+# si le mouvement est légal, qu'il n'y a pas d'obstacles sur le chemin 'leChemin'
+# et que la case de destination n'est pas occupé par une pièce de la même couleur
+# alors on bouge la pièce
+# si il y a une pièce au bout, alors on la "mange" :
+#   la pièce à destination passe de l'état "enJeu" 'True' à 'False' avec des coordonnées en 100 100 ou autre
+def bougeLaPiece(active, destination):
+    pass
+    # regarder dans la BDD si la case de destination est occupée par une pièce adverse
+    # si oui, retirer la valeur "enJeu" de cette pièce en False
+    # 
+    # bouger notre pièce vers la nouvelle case (changer la valeur des coordonnées dans la bdd)
+    #  
 
 
 #POUR TESTER AVANT D AVOIR TOUT FINI
-active=piece('noir','pion',44)
+active=piece('noir','tour',11)
 # mvt(active)
 # checkmvt(active, 55)
 #leChemin(active,26)
 lesTrajectoires(active)
-
+lesTrajectoiresValides(active)
+#leChemin(active, 23)
