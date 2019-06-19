@@ -1,65 +1,21 @@
-"""
-@-- jeu echecs en reseau --@ :-)
+#code mail du jeu d'echecs
+cadre=[]
+for i in 1,2,3,4,5,6,7,8:
+    for j in 1,2,3,4,5,6,7,8:
+        cadre.append(int(f"{i}{j}"))
 
-Proposer un jeu d'echecs, ou je peux affronter un adversaire sur le reseau
+print("cadre : ", cadre)
 
-[ COTE USER ]
-____
-> chessX
-____
+bordDuCadre=[]
+for i in 0,1,2,3,4,5,6,7,8,9:
+    bordDuCadre.append(i)
+    bordDuCadre.append(i*10)
+    bordDuCadre.append(i+90)
+    bordDuCadre.append(i*10+9)
+print("bord du cadre :", bordDuCadre)
 
-*- un affichage terminal serait plus simple pour commencer -*
-*- un affichage avec Tkinter serait excellent par la suite -*
-
-[ COTE APPLICATION ]
-
-architecture client-serveur.
-
-Un serveur http python pourrait "d'emmeteur" sur les emplacements des nouveaux coups.
-on affichera toutes les pieces sur les nouvelles positions coté utilisateur.
-
-
-               SERVEUR
-            /          
-           / "fou A3"    \ "fou A3"
-    player1              player2       ----> *affiche le fou en A3*
-
-     ----------------------->
-
--logs
-
-[ A suivre ]
-
--tableaux des derniers match sur index.html
--systeme de sauvegarde de partie coté serveur
--a vous de trouver
-"""
-
-
-# liste_pieces=[]
-# liste_positions=[]
-# liste_positions_noire=[]
-# liste_positions_blanche=[]
-# liste_colonnes=("A","B","C","D","E","F","G","H")
-# liste_lignes=(1,2,3,4,5,6,7,8)
-
-# cadre=[]
-# for i in 1,2,3,4,5,6,7,8:
-#     for j in 1,2,3,4,5,6,7,8:
-#         cadre.append(int(f"{i}{j}"))
-
-# print(cadre)
-
-# def surLePlateau(case):
-#     if case in cadre:
-#         print(case,"est sur le plateau")
-#         return True
-#     else:
-#         print(case, "n'est pas sur le plateau")
-
-# surLePlateau(88)
-# surLePlateau(59)
-
+cadreEtBord=cadre+bordDuCadre
+print("cadre et bord : ",cadreEtBord)
 
 
 class piece():
@@ -78,84 +34,6 @@ class piece():
             self.moved=True # on change l'état du moved pour marquer que la pièce a bougé (pour le roc ou le pion)
     def casescontrolees():
         pass
-    
-# J'ai besoin que tous les objets pièces soient dans une liste liste_pieces
-# pour pouvoir faire une liste des positions liste_positions
-# pour ensuite tester ces positions dans les mouvements
-
-
-# w=piece('noir','pion',56)
-# liste_pieces.append(v)
-# liste_pieces.append(w)
-# for i in liste_pieces:
-#     liste_positions.append(i.position)
-#     if i.couleur=="blanc":
-#         liste_positions_blanche.append(i.position)
-#     else:
-#         liste_positions_noire.append(i.position)
-# print(v)
-# print(liste_positions)
-# print(liste_positions_blanche)
-# print(liste_positions_noire)
-
-#essai de programmation des mouvements
-#ou plutôt des cases valides pour un déplacement
-
-# def casescontrolees():
-#     #si la pièce est un pion
-#     if self.typePiece=="pion":
-#         #le pion ne peux qu'avancer tout droit
-#         #ou prendre en biais
-#         #en fonction de sa couleur : vers le haut pour les blancs, vers le bas pour les noirs
-#         if self.couleur=="blanc":
-#             colonne=self.position[0]
-#             ligne=self.position[1]
-#             #case devant
-#             if (colonne,ligne+1) not in liste_positions:
-#                 self.casescontrolees.append((colonne,ligne+1))
-#             #case avant gauche
-#             #Si on est pas sur le bord gauche, on regarde la case avant gauche,
-#             #si elle n'est pas occupée par une pièce de notre couleur
-#             coordtemp = (liste_colonnes[index(colonne)-1],liste_lignes[index(ligne)+1])
-#             if colonne!="A" and temp in liste_positions_noire:
-#                 self.casescontrolees.append((coordtemp))
-#             #case avant droite
-#             coordtemp = (liste_colonnes[index(colonne)+1],liste_lignes[index(ligne)+1])
-#             if colonne!="H" and temp in liste_positions_noire:
-#                 self.casescontrolees.append((coordtemp))
-#             # 2 cases devant pour le premier mouvement du pion
-#             if self.moved==False:
-#                 coordtemp = (liste_colonnes[index(colonne)],liste_lignes[index(ligne)+2])
-#                 if coordtemp not in liste_positions:
-#                     self.casescontrolees.append(coordtemp)
-#         if self.couleur=="noir":
-#             colonne=self.position[0]
-#             ligne=self.position[1]
-#             #case devant
-#             if (colonne,ligne-1) not in liste_positions:
-#                 self.casescontrolees.append((colonne,ligne-1))
-#             #case avant gauche
-#             #Si on est pas sur le bord gauche, on regarde la case avant gauche,
-#             #si elle n'est pas occupée par une pièce de notre couleur
-#             if colonne!="A" and temp in liste_positions_blanche:
-#                 coordtemp = (liste_colonnes[index(colonne)-1],liste_lignes[index(ligne)-1])
-#                 self.casescontrolees.append((coordtemp))
-#             #case avant gauche
-#             if colonne!="H" and temp in liste_positions_blanche:
-#                 coordtemp = (liste_colonnes[index(colonne)+1],liste_lignes[index(ligne)-1])
-#                 self.casescontrolees.append((coordtemp))
-#             # 2 cases devant pour le premier mouvement du pion
-#             if self.moved==False:
-#                 coordtemp = (liste_colonnes[index(colonne)],liste_lignes[index(ligne)-2])
-#                 if coordtemp not in liste_positions:
-#                     self.casescontrolees.append(coordtemp)
-
-
-# valeur de départ
-# valeur d'arrivée
-
-#v=piece('blanc','pion',11)
-
 
 #mvt du pion
 def mvtPion(pieceActive):
@@ -163,56 +41,76 @@ def mvtPion(pieceActive):
     if pieceActive.couleur=='blanc':
         patern.append(pieceActive.position+1)
         patern.append(pieceActive.position+11)
-        patern.append(pieceActive.position+9)
+        patern.append(pieceActive.position-9)
         if pieceActive.moved==False:
             patern.append(pieceActive.position+2)
     if pieceActive.couleur=='noir':
         patern.append(pieceActive.position-1)
         patern.append(pieceActive.position-11)
-        patern.append(pieceActive.position-9)
+        patern.append(pieceActive.position+9)
         if pieceActive.moved==False:
-            patern.append(pieceActive-2)
+            patern.append(pieceActive.position-2)
     patern.sort()
     return patern
 
 #mvt de la tour
 def mvtTour(pieceActive):
     patern=[]
-    for i in -7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7:
+    for i in 1,2,3,4,5,6,7,8:
         patern.append(pieceActive.position+10*i)
+        if pieceActive.position+10*i in bordDuCadre: break
+    print(patern)
+    for i in -1,-2,-3,-4,-5,-6,-7,-8:
+        patern.append(pieceActive.position+10*i)
+        if pieceActive.position+10*i in bordDuCadre: break
+    print(patern)
     for i in range(10):
         dizaine=pieceActive.position//10
         dizaine=dizaine*10
         patern.append(dizaine+i) #la colonne c'est mauvais, il faudrait rester dans la dizaine
+    print("patern de la Tour : ", patern)
     patern.sort()
     return patern
 #mvt du fou
 def mvtFou(pieceActive):
     patern=[]
-    for i in -7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7:
+    for i in 1,2,3,4,5,6,7:
         patern.append(pieceActive.position+11*i)
+        if pieceActive.position+11*i in bordDuCadre: break
+    for i in 1,2,3,4,5,6,7:
         patern.append(pieceActive.position+9*i)
-    patern.sort()
+        if pieceActive.position+9*i in bordDuCadre: break
+    for i in 1,2,3,4,5,6,7:
+        patern.append(pieceActive.position-11*i)
+        if pieceActive.position-11*i in bordDuCadre: break
+    for i in 1,2,3,4,5,6,7:
+        patern.append(pieceActive.position-9*i)
+        if pieceActive.position-9*i in bordDuCadre: break
+    #patern.sort()
+    print("patern du Fou : ", patern)
     return patern
 #mvt de la reine
 def mvtQueen(pieceActive):
     patern=[]
-    for i in -7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7:
-        patern.append(pieceActive.position+11*i)
-        patern.append(pieceActive.position+9*i)
-        patern.append(pieceActive.position+10*i)
-    for i in range(10):
-        dizaine=pieceActive.position//10
-        dizaine=dizaine*10
-        patern.append(dizaine+i) #la colonne c'est mauvais, il faudrait rester dans la dizaine
-    patern.sort()
-    print(patern)
+    patern=mvtFou(pieceActive)+mvtTour(pieceActive)
+    # for i in -7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7:
+    #     patern.append(pieceActive.position+11*i)
+    #     patern.append(pieceActive.position+9*i)
+    #     patern.append(pieceActive.position+10*i)
+    # for i in range(10):
+    #     dizaine=pieceActive.position//10
+    #     dizaine=dizaine*10
+    #     patern.append(dizaine+i) #la colonne c'est mauvais, il faudrait rester dans la dizaine
+    # patern.sort()
+    print("patern de la reine : ",patern)
     return patern
 #mvt du cavalier
 def mvtCavalier(pieceActive):
+    global cadre
     patern=[]
     for i in -21,-19,-12,-8,8,12,19,21:
-        patern.append(pieceActive.position+i)
+        if pieceActive.position+i in cadre:
+            patern.append(pieceActive.position+i)
     patern.sort()
     return patern
 #mvt du roi
@@ -229,7 +127,7 @@ def mvtKing(pieceActive):
 #la fonction mvt calcule les trajectoires de la pièce
 def mvt(pieceActive):
     if active.typePiece=='pion':
-        # print (mvtPion(pieceActive))
+        print (mvtPion(pieceActive))
         return mvtPion(pieceActive)
     if active.typePiece=='tour':
         # print (mvtTour(pieceActive))
@@ -247,17 +145,109 @@ def mvt(pieceActive):
         #print (mvtCavalier(pieceActive))
         return mvtCavalier(pieceActive)
 
+def mvtPlateau(pieceActive):
+    global cadre
+    patern=[]
+    temp=mvt(pieceActive)
+    for i in temp:
+        if i in cadre:
+            patern.append(i)
+    print("les cases où on peut aller :", patern)
+    return patern
+
+
+
 #check mouvement vérifie que la caseArrivee est sur les trajectoire de la pièce
 def checkmvt(pieceActive, caseArrivee):
-    if caseArrivee in mvt(pieceActive):
+    temp=mvtPlateau(pieceActive)
+    if caseArrivee in temp:
         print ("mouvement correct")
         return True
     else:
         print("mouvement interdit")
         return False
 
+def lesTrajectoires(pieceActive):
+    # if not checkmvt(pieceActive,caseArrivee):
+    #     return False
+    if pieceActive.typePiece=='king' or pieceActive.typePiece=='cavalier' or pieceActive.typePiece=='pion':
+        print("pas d'obstacle pour le roi ou le cavalier")
+        chemin=[]
+        chemin=mvtPlateau(pieceActive)
+        return chemin
+    mvtBordDuCadre=[]
+    temp=mvt(pieceActive)
+    for i in bordDuCadre:
+        if i in temp and i not in mvtBordDuCadre:
+                mvtBordDuCadre.append(i)
+    print("les cases où la pièce sort du cadre : ", mvtBordDuCadre)
+    tousChemins=[]
+    for j in mvtBordDuCadre:
+        difference=abs(pieceActive.position-j)
+        print(difference)
+        for i in 11,10,9:
+            if difference%i==0:
+                quotient=i
+                print (quotient)
+        if difference%11==0 or difference%10==0 or difference%9==0:
+            pass
+        else:
+            quotient=1
+        chemin=[]
+        if pieceActive.position < j:
+            temp=100
+            i=1
+            while temp!=j:
+                temp=pieceActive.position+i*quotient
+                chemin.append(temp)
+                i+=1
+                print(temp)
+            chemin.sort()
+        if pieceActive.position > j:
+            temp=100
+            i=1
+            while temp!=j:
+                temp=pieceActive.position-i*quotient
+                chemin.append(temp)
+                i+=1
+                print(temp)
+            chemin.sort(reverse=True)
+        tousChemins.append(chemin)
+    #on sort la desitination de la liste
+    #chemin.pop()
+    print("toutes les trajectoires de la pièce ", pieceActive.typePiece, " à partir de la position ",pieceActive.position," : ", tousChemins)
+    return tousChemins
+
+# lestrajectoires valides = les cases cliquables où notre pièce peut aller
+# == aussi la zone de controle, qui sera utile pour la definition de l'echec
+def lesTrajectoiresValides(pieceActive):
+    # pour chaque liste, dans l'ordre :
+    # vérifier dans la bdd si la case est libre
+    # si elle n'est pas libre vérifier si la couleur est prenable
+    # si elle est prenable, ajouter cette case dans les destinations et sortir de la boucle
+    # ajouter la liste à la liste des trajectoires
+    
+    #sortir les listes de liste
+    for i in lesTrajectoires(pieceActive):
+        print("on va regarder la trajectoire ", i)
+        for j in i:
+            print("on regarde la case ",j)
+            # pour savoir si il y a une pièce dessus on regarde avec rowcount
+            # https://openclassrooms.com/forum/sujet/savoir-si-une-requete-sql-renvoie-des-informations-53841
+            if j in cadre:
+                print("la case est dans le cadre")
+            else:
+                print("la case n'est pas dans le cadre")
+            
+    
+    pass
+
+
+
+
 
 #la fonction chemin donne le chemin le plus direct pour aller à la destination
+# inclut la destination
 def leChemin(pieceActive, caseArrivee):
     if not checkmvt(pieceActive,caseArrivee):
         return False
@@ -266,33 +256,16 @@ def leChemin(pieceActive, caseArrivee):
         chemin=[]
         return chemin
     difference=abs(pieceActive.position-caseArrivee)
-    print(difference)
+    print("difference : ",difference)
     for i in 11,10,9:
         if difference%i==0:
             quotient=i
-            print (quotient)
+            print ("quotient : ", quotient)
     if difference%11==0 or difference%10==0 or difference%9==0:
         pass
     else:
         quotient=1
-    #     else:
-    #         quotient=1
-    #         print(quotient)
-    # droite=[]
-    # for i in mvt(pieceActive):
-    #     if i%quotient==0:
-    #         droite.append(i)
     chemin=[]
-    # if pieceActive.position < caseArrivee:
-    #     for i in droite:
-    #         if i > pieceActive.position:
-    #             chemin.append(i)
-    #     chemin.sort()
-    # else:
-    #     for i in droite:
-    #         if i<pieceActive.position:
-    #             chemin.append(i)
-    #     chemin.sort(reverse=True)
     if pieceActive.position < caseArrivee:
         temp=0
         i=1
@@ -300,7 +273,7 @@ def leChemin(pieceActive, caseArrivee):
             temp=pieceActive.position+i*quotient
             chemin.append(temp)
             i+=1
-            print(temp)
+            print("phase ascendante : ",temp)
         chemin.sort()
     if pieceActive.position > caseArrivee:
         temp=0
@@ -309,38 +282,37 @@ def leChemin(pieceActive, caseArrivee):
             temp=pieceActive.position-i*quotient
             chemin.append(temp)
             i+=1
-            print(temp)
+            print("phase descendante : ",temp)
         chemin.sort(reverse=True)
     #on sort la desitination de la liste
-    chemin.pop()
+    #chemin.pop()
     print(chemin)
     return chemin
 
-#la maintenant on va taper dans la bdd
+# la maintenant on va taper dans la bdd
 # pour vérifier les positions du chemin et vérifier qu'il n'y a rien sur le chemin
-#def verifObstacle(pieceActive, caseArrivee):
+# def verifObstacle(pieceActive, caseArrivee):
 
 
+# si le mouvement est légal, qu'il n'y a pas d'obstacles sur le chemin 'leChemin'
+# et que la case de destination n'est pas occupé par une pièce de la même couleur
+# alors on bouge la pièce
+# si il y a une pièce au bout, alors on la "mange" :
+#   la pièce à destination passe de l'état "enJeu" 'True' à 'False' avec des coordonnées en 100 100 ou autre
+def bougeLaPiece(active, destination):
+    pass
+    # regarder dans la BDD si la case de destination est occupée par une pièce adverse
+    # si oui, retirer la valeur "enJeu" de cette pièce en False
+    # 
+    # bouger notre pièce vers la nouvelle case (changer la valeur des coordonnées dans la bdd)
+    #  
 
-active=piece('blanc','tour',22)
+
+#POUR TESTER AVANT D AVOIR TOUT FINI
+active=piece('noir','tour',11)
 # mvt(active)
 # checkmvt(active, 55)
-leChemin(active,28)
-
-
-"""
-Je vais créer des modules pour les mouvements de base (les 8 directions cardinales)
-pour faire des tests dans les mouvements des différentes pièces
-En gros : 
-1. on regarde la couleur de la pièce (self.couleur)
-2. dans les directions du déplacement de la pièce, on regarde si la case est libre 
-ou occupée par une pièce adverse (d'une autre couleur voir 
-liste_positions_noire et liste_positions_blanc)
-Alors on enregistre la case dans les lignes controlées
-3. On continue dans les directions
-4. si on atteint un bord ou une pièce de notre couleur, on arrête
-5. la liste des cases controlées permet de savoir si les déplacements demandés sont légaux ou pas.
-de voir si le roi est en échec
-si le roi a le droit de bouger dans une case...
-
-"""
+#leChemin(active,26)
+lesTrajectoires(active)
+lesTrajectoiresValides(active)
+#leChemin(active, 23)
