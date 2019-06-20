@@ -21,8 +21,8 @@ print("cadre et bord : ",cadreEtBord)
 class piece():
     def __init__ (self, couleur, typePiece, position):
         self.couleur = couleur #'requete sql' #blanc ou noir
-        self.typePiece= typePiece  # king queen fou cavalier tour pion
-        self.position= position # coordonnées
+        self.typePiece = typePiece  # king queen fou cavalier tour pion
+        self.position = position # coordonnées
         self.enjeu=True #enjeu ou pas (pris)
         self.moved=False # a bougé (True) ou non (False)
         self.controle=[] #liste des cases sur laquelle la pièce peut se déplacer ou prendre une pièce
@@ -34,6 +34,19 @@ class piece():
             self.moved=True # on change l'état du moved pour marquer que la pièce a bougé (pour le roc ou le pion)
     def casescontrolees():
         pass
+
+#prise du pion
+def prisePion(pieceActive):
+    patern=[]
+    if pieceActive.couleur=='blanc':
+        patern.append(pieceActive.position+11)
+        patern.append(pieceActive.position-9)
+    if pieceActive.couleur=='noir':
+        patern.append(pieceActive.position-11)
+        patern.append(pieceActive.position+9)
+    patern.sort()
+    return patern  
+
 
 #mvt du pion
 def mvtPion(pieceActive):
@@ -226,7 +239,6 @@ def lesTrajectoiresValides(pieceActive):
     # si elle n'est pas libre vérifier si la couleur est prenable
     # si elle est prenable, ajouter cette case dans les destinations et sortir de la boucle
     # ajouter la liste à la liste des trajectoires
-    
     #sortir les listes de liste
     for i in lesTrajectoires(pieceActive):
         print("on va regarder la trajectoire ", i)
@@ -242,48 +254,48 @@ def lesTrajectoiresValides(pieceActive):
         else:
             print("on va regarder la case unique de la trajectoir ",i)
         
-#la fonction chemin donne le chemin le plus direct pour aller à la destination
-# inclut la destination
-def leChemin(pieceActive, caseArrivee):
-    if not checkmvt(pieceActive,caseArrivee):
-        return False
-    if pieceActive.typePiece=='king' or pieceActive.typePiece=='cavalier':
-        print("pas d'obstacle pour le roi ou le cavalier")
-        chemin=[]
-        return chemin
-    difference=abs(pieceActive.position-caseArrivee)
-    print("difference : ",difference)
-    for i in 11,10,9:
-        if difference%i==0:
-            quotient=i
-            print ("quotient : ", quotient)
-    if difference%11==0 or difference%10==0 or difference%9==0:
-        pass
-    else:
-        quotient=1
-    chemin=[]
-    if pieceActive.position < caseArrivee:
-        temp=0
-        i=1
-        while temp!=caseArrivee:
-            temp=pieceActive.position+i*quotient
-            chemin.append(temp)
-            i+=1
-            print("phase ascendante : ",temp)
-        chemin.sort()
-    if pieceActive.position > caseArrivee:
-        temp=0
-        i=1
-        while temp!=caseArrivee:
-            temp=pieceActive.position-i*quotient
-            chemin.append(temp)
-            i+=1
-            print("phase descendante : ",temp)
-        chemin.sort(reverse=True)
-    #on sort la desitination de la liste
-    #chemin.pop()
-    print(chemin)
-    return chemin
+# #la fonction chemin donne le chemin le plus direct pour aller à la destination
+# # inclut la destination
+# def leChemin(pieceActive, caseArrivee):
+#     if not checkmvt(pieceActive,caseArrivee):
+#         return False
+#     if pieceActive.typePiece=='king' or pieceActive.typePiece=='cavalier':
+#         print("pas d'obstacle pour le roi ou le cavalier")
+#         chemin=[]
+#         return chemin
+#     difference=abs(pieceActive.position-caseArrivee)
+#     print("difference : ",difference)
+#     for i in 11,10,9:
+#         if difference%i==0:
+#             quotient=i
+#             print ("quotient : ", quotient)
+#     if difference%11==0 or difference%10==0 or difference%9==0:
+#         pass
+#     else:
+#         quotient=1
+#     chemin=[]
+#     if pieceActive.position < caseArrivee:
+#         temp=0
+#         i=1
+#         while temp!=caseArrivee:
+#             temp=pieceActive.position+i*quotient
+#             chemin.append(temp)
+#             i+=1
+#             print("phase ascendante : ",temp)
+#         chemin.sort()
+#     if pieceActive.position > caseArrivee:
+#         temp=0
+#         i=1
+#         while temp!=caseArrivee:
+#             temp=pieceActive.position-i*quotient
+#             chemin.append(temp)
+#             i+=1
+#             print("phase descendante : ",temp)
+#         chemin.sort(reverse=True)
+#     #on sort la desitination de la liste
+#     #chemin.pop()
+#     print(chemin)
+#     return chemin
 
 # la maintenant on va taper dans la bdd
 # pour vérifier les positions du chemin et vérifier qu'il n'y a rien sur le chemin
@@ -301,17 +313,49 @@ def bougeLaPiece(active, destination):
     # sinon, mettre à jour piece.position
     # 
     # bouger notre pièce vers la nouvelle case (changer la valeur des coordonnées dans la bdd)
-    #  
+    pass
 
 
 #à la fin de chaque tour on vérifie si les rois sont en échecs ou non
 #si un roi est déjà en échec et le reste, alors il a perdu
-def checkchess():
-    # on prend les positions des rois,
+def checkchess(couleur):
+    # on prend les positions des rois dans la bdd
+    # avec une requete sql, pour la couleur demandé
+    # on crée un objet avec
+    # leRoi=...
+
+    # on change son type pour utiliser la fonction des trajectoires
+    # et regarder si on a une pièce menaçante (type et couleur) au bout
+    # PAR EXEMPLE ON PASSE EN CAVALIER
+    leRoi.typePiece='cavalier'
+    test=lesTrajectoiresValides(leRoi)
+    for i in test:
+        if False:# regarder dans la bdd si on a une pièce sur la case i qui est un cavalier d'une couleur différente
+            return True
+    leRoi.typePiece='Tour'
+    test=lesTrajectoiresValides(leRoi)
+    for i in test:
+        if False: # regarder dans la bdd si on a une pièce sur la case i qui est une tour ou reine d'une couleur différente
+            # à tester sur i.pop() la dernière case
+            return True   
+    leRoi.typePiece='Fou'
+    test=lesTrajectoiresValides(leRoi)
+    for i in test:
+        if False: # regarder dans la bdd si on a une pièce sur la case i qui est une tour ou reine d'une couleur différente
+            # à tester sur i.pop() la dernière case
+            return True
+    leRoi.typePiece='pion'
+    test=lesTrajectoiresValides(leRoi)
+
     # on regarde si il est menacé par une pière adverse
     # en diagonale, si on trouve un fou ou une reine
+    # il faut utiliser les fonctions de mouvement et de trajectoire
+
     # en droite pour voir si on trouve une tour ou une reine
     # en diagonale à une case vers l'avant si on trouve un pion
+
+    #en le déplaçant comme un cavalier voir si on trouve un cavalier adverse
+    # on retourne True ou False en fonction du résultat
     pass
 
 
