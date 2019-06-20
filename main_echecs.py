@@ -48,7 +48,7 @@ def mvtPion(pieceActive):
         patern.append(pieceActive.position-1)
         patern.append(pieceActive.position-11)
         patern.append(pieceActive.position+9)
-        if pieceActive.moved==False:
+        if pieceActive.moved==False: #and pieceActive.position not in listePosition
             patern.append(pieceActive.position-2)
     patern.sort()
     return patern
@@ -230,22 +230,18 @@ def lesTrajectoiresValides(pieceActive):
     #sortir les listes de liste
     for i in lesTrajectoires(pieceActive):
         print("on va regarder la trajectoire ", i)
-        for j in i:
-            print("on regarde la case ",j)
-            # pour savoir si il y a une pièce dessus on regarde avec rowcount
-            # https://openclassrooms.com/forum/sujet/savoir-si-une-requete-sql-renvoie-des-informations-53841
-            if j in cadre:
-                print("la case est dans le cadre")
-            else:
-                print("la case n'est pas dans le cadre")
-            
-    
-    pass
-
-
-
-
-
+        if type(i)==type([]):
+            for j in i:
+                print("on regarde la case ",j)
+                # pour savoir si il y a une pièce dessus on regarde avec rowcount
+                # https://openclassrooms.com/forum/sujet/savoir-si-une-requete-sql-renvoie-des-informations-53841
+                if j in cadre:
+                    print("la case est dans le cadre")
+                else:
+                    print("la case n'est pas dans le cadre")
+        else:
+            print("on va regarder la case unique de la trajectoir ",i)
+        
 #la fonction chemin donne le chemin le plus direct pour aller à la destination
 # inclut la destination
 def leChemin(pieceActive, caseArrivee):
@@ -300,19 +296,31 @@ def leChemin(pieceActive, caseArrivee):
 # si il y a une pièce au bout, alors on la "mange" :
 #   la pièce à destination passe de l'état "enJeu" 'True' à 'False' avec des coordonnées en 100 100 ou autre
 def bougeLaPiece(active, destination):
-    pass
     # regarder dans la BDD si la case de destination est occupée par une pièce adverse
-    # si oui, retirer la valeur "enJeu" de cette pièce en False
+    # si oui, passer la valeur "enJeu" de cette pièce en False (requete avec where case = destination)
+    # sinon, mettre à jour piece.position
     # 
     # bouger notre pièce vers la nouvelle case (changer la valeur des coordonnées dans la bdd)
     #  
 
 
+#à la fin de chaque tour on vérifie si les rois sont en échecs ou non
+#si un roi est déjà en échec et le reste, alors il a perdu
+def checkchess():
+    # on prend les positions des rois,
+    # on regarde si il est menacé par une pière adverse
+    # en diagonale, si on trouve un fou ou une reine
+    # en droite pour voir si on trouve une tour ou une reine
+    # en diagonale à une case vers l'avant si on trouve un pion
+    pass
+
+
 #POUR TESTER AVANT D AVOIR TOUT FINI
-active=piece('noir','tour',11)
+active=piece('blanc','pion',22)
 # mvt(active)
 # checkmvt(active, 55)
 #leChemin(active,26)
 lesTrajectoires(active)
 lesTrajectoiresValides(active)
 #leChemin(active, 23)
+
