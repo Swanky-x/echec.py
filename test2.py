@@ -16,8 +16,8 @@ FenPrincpale = Tk()
 can0 = Canvas(FenPrincpale, width=WIDTH, height=HEIGHT, background="black")
 can0.pack()
 
-caseNoir = PhotoImage(file=r"img\noir.png")
-caseBlanche = PhotoImage(file=r"img\blanc.png")
+caseNoir = PhotoImage(file=r"img/noir.png")
+caseBlanche = PhotoImage(file=r"img/blanc.png")
 
 for ligne in range(NB_LINES):
     for col in range(NB_COLS):
