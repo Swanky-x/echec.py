@@ -2,7 +2,7 @@ from tkinter import *
 from random import randrange
 
 
-PICT_SIZE = 100
+PICT_SIZE = 66
 PAD = 1
 SIDE = PICT_SIZE + PAD
 
