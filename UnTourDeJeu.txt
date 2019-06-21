@@ -37,3 +37,38 @@ clique pion arriver
 ===> affichage mais à jour le visuel (<== Lilian)
 
 On recommence jusqu'as ce que la base.Py annonce l'echec ou l'affichage annonce l'abandon (<== Kevin)(<== Lilian)
+
+
+
+# [['blanc',11,'tourb1','tour'],
+# ['blanc',21,'cavalierb1','cavalier'],
+# ['blanc',31,'foub1','fou'],
+# ['blanc',41,'reineb','queen'],
+# ['blanc',51,'roib','king'],
+# ['blanc',61,'foub2','fou'],
+# ['blanc',71,'cavalierb2','cavalier'],
+# ['blanc',81,'tourb2','tour'],
+# ['blanc',12,'pionb1','pion'],
+# ['blanc',22,'pionb2','pion'],
+# ['blanc',32,'pionb3','pion'],
+# ['blanc',42,'pionb4','pion'],
+# ['blanc',52,'pionb5','pion'],
+# ['blanc',62,'pionb6','pion'],
+# ['blanc',72,'pionb7','pion'],
+# ['blanc',82,'pionb8','pion'],
+# ['noir',18,'tourn1','tour'],
+# ['noir',28,'cavaliern1','cavalier'],
+# ['noir',38,'foun1','fou'],
+# ['noir',48,'reinen','queen'],
+# ['noir',58,'roin','king'],
+# ['noir',68,'foun2','fou'],
+# ['noir',78,'cavaliern2','cavalier'],
+# ['noir',88,'tourn2','tour'],
+# ['noir',17,'pionn1','pion'],
+# ['noir',27,'pionn2','pion'],
+# ['noir',37,'pionn3','pion'],
+# ['noir',47,'pionn4','pion'],
+# ['noir',57,'pionn5','pion'],
+# ['noir',67,'pionn6','pion'],
+# ['noir',77,'pionn7','pion'],
+# ['noir',87,'pionn8','pion']]
