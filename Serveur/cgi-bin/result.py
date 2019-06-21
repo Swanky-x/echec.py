@@ -20,7 +20,9 @@ print()
 html = """<!DOCTYPE html>
 <head> 
     <meta charset="UTF-8">
-    <title>soumission pseudo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../stylesheet.css" />
+    <title>Inscription/connexion</title>
 </head>
 <body>"""
 print(html)
@@ -58,11 +60,14 @@ if form.getvalue("send") == "Sign In":
             if h == True:
                 # ICI LE CODE POUR DÉMARRER UNE PARTIE
                 print (f"<p>Vous êtes connectés</p>")
-                html = """  <p> ushfdfdisfjlfjd</p> """
+                html = """ 
+                <div>
+                    <form action="action_page.py" method="post">
+                        <button type="submit" name="actio">Commencer nouvelle partie</button>
+                    </form>                    
+                </div>                
+                 """
                 print (html)
-
-
-
 
             else:
                 print(f"<p>Login et mod de passe ne correspondent pas</p>")

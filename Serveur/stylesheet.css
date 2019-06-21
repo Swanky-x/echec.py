@@ -1,0 +1,69 @@
+/********BOUTON PARTIES****************/
+button
+{
+	transition: all 0.17s;
+	width: 228px;
+	border:none;
+	padding-bottom:0.6em;
+    padding-top:0.8em;
+	padding-left:2em;
+	padding-right:2em;
+	border-bottom:3px solid #ccae62;
+	font-size:14px;
+	font-family:Verdana, Geneva, sans-serif;
+	background-color:#ffda79;
+	color:#484841;
+	margin-bottom:18px;
+	cursor:pointer;
+}
+
+button:hover{
+	background-color:#b9a781;
+	border-bottom:3px solid #948462;
+	color:#FFF;
+}
+
+
+/********* FORMULAIRE **************/
+
+form input {
+	transition: all 0.17s;
+}
+
+input::placeholder {
+	font-style: italic;
+	color:#999999;
+	font-family:Verdana, Geneva, sans-serif;
+}
+
+input::-webkit-input-placeholder{
+	font-style: italic;
+	color:#999999;
+	font-family:Verdana, Geneva, sans-serif;
+}
+input:focus::placeholder {
+	color: #FFF;
+}
+
+
+
+input[type="text"],input[type="password"]{
+	border: 1px solid #b9a781;
+	padding: 8px;
+	width: 230px;
+}
+input[type="text"]:active, input[type="password"]:active, input[type="text"]:focus, input[type="password"]:focus {	
+	background-color:#b9a781;
+	color: #FFF;
+}
+input[type="submit"]{
+	border: 1px solid#b9a781;
+	padding: 8px;
+	width: 130px;
+	cursor:pointer;
+}
+input[type="submit"]:hover {
+	background-color:#aaa69d;
+	border: 1px solid #aaa69d;
+	color:#ffffff;
+}
