@@ -23,7 +23,7 @@ class piece():
         self.couleur = couleur #'requete sql' #blanc ou noir
         self.typePiece = typePiece  # king queen fou cavalier tour pion
         self.position = position # coordonnées
-        self.enjeu=True #enjeu ou pas (pris)
+        #self.enjeu=True #enjeu ou pas (pris)
         self.moved=False # a bougé (True) ou non (False)
         self.controle=[] #liste des cases sur laquelle la pièce peut se déplacer ou prendre une pièce
         self.echec=False #pour le roi 
@@ -368,11 +368,11 @@ def checkchess(couleur):
 
 
 #POUR TESTER AVANT D AVOIR TOUT FINI
-active=piece('blanc','king',22)
+active=piece('blanc','pion',52)
 # mvt(active)
 # checkmvt(active, 55)
 #leChemin(active,26)
-lesTrajectoires(active)
+#lesTrajectoires(active)
 lesTrajectoiresValides(active)
 #leChemin(active, 23)
 
