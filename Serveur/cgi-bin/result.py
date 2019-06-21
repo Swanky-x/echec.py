@@ -58,6 +58,12 @@ if form.getvalue("send") == "Sign In":
             if h == True:
                 # ICI LE CODE POUR DÉMARRER UNE PARTIE
                 print (f"<p>Vous êtes connectés</p>")
+                html = """  <p> ushfdfdisfjlfjd</p> """
+                print (html)
+
+
+
+
             else:
                 print(f"<p>Login et mod de passe ne correspondent pas</p>")
         else:
