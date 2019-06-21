@@ -78,7 +78,7 @@ else:
     # Tunnel de création de compte
     c_pseudo = form.getvalue("c_pseudo")
     c_email = form.getvalue("c_email")
-    c_password = get_hashed_password(form.getvalue("c_password"))
+    c_password = form.getvalue("c_password")
 
     if "c_pseudo" not in form or "c_password" not in form or "c_email" not in form: 
         print(f"<H1>Erreur</H1>")
@@ -96,6 +96,7 @@ else:
         cursor.execute("SELECT * FROM joueurs WHERE pseudo = '"+c_pseudo+"'")
         cursor.fetchall()
         result = (cursor.rowcount)
+        c_password=get_hashed_password(c_password)
 
         if result < 1 :
             cursor.execute("INSERT INTO joueurs (pseudo, mdp, email) VALUES ('"+c_pseudo+"','"+c_password+"','"+c_email+"')")
