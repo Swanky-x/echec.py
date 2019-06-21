@@ -157,6 +157,10 @@ def mvt(pieceActive):
     if active.typePiece=='cavalier':
         #print (mvtCavalier(pieceActive))
         return mvtCavalier(pieceActive)
+    if active.typePiece=='prisePion':
+        #print (mvtCavalier(pieceActive))
+        return prisePion(pieceActive)
+    
 
 def mvtPlateau(pieceActive):
     global cadre
@@ -183,7 +187,7 @@ def checkmvt(pieceActive, caseArrivee):
 def lesTrajectoires(pieceActive):
     # if not checkmvt(pieceActive,caseArrivee):
     #     return False
-    if pieceActive.typePiece=='king' or pieceActive.typePiece=='cavalier' or pieceActive.typePiece=='pion':
+    if pieceActive.typePiece=='king' or pieceActive.typePiece=='cavalier' or pieceActive.typePiece=='pion' or pieceActive.typePiece=='prisePion':
         print("pas d'obstacle pour le roi ou le cavalier")
         chemin=[]
         chemin=mvtPlateau(pieceActive)
@@ -191,7 +195,7 @@ def lesTrajectoires(pieceActive):
     mvtBordDuCadre=[]
     temp=mvt(pieceActive)
     for i in bordDuCadre:
-        if i in temp and i not in mvtBordDuCadre:
+        if i in temp    and i not in mvtBordDuCadre:
                 mvtBordDuCadre.append(i)
     print("les cases où la pièce sort du cadre : ", mvtBordDuCadre)
     tousChemins=[]
@@ -344,8 +348,12 @@ def checkchess(couleur):
         if False: # regarder dans la bdd si on a une pièce sur la case i qui est une tour ou reine d'une couleur différente
             # à tester sur i.pop() la dernière case
             return True
-    leRoi.typePiece='pion'
+    leRoi.typePiece='prisePion'
     test=lesTrajectoiresValides(leRoi)
+    for i in test:
+        if False: # regarder dans la bdd si on a une pièce sur la case i un pion
+            # à tester sur i.pop() la dernière case
+            return True
 
     # on regarde si il est menacé par une pière adverse
     # en diagonale, si on trouve un fou ou une reine
@@ -360,7 +368,7 @@ def checkchess(couleur):
 
 
 #POUR TESTER AVANT D AVOIR TOUT FINI
-active=piece('blanc','pion',22)
+active=piece('blanc','king',22)
 # mvt(active)
 # checkmvt(active, 55)
 #leChemin(active,26)
