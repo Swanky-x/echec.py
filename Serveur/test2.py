@@ -2,7 +2,7 @@ from tkinter import *
 from random import randrange
 
 
-PICT_SIZE = 100
+PICT_SIZE = 66
 PAD = 1
 SIDE = PICT_SIZE + PAD
 
@@ -42,7 +42,7 @@ for ligne in range(NB_LINES):
 for ligne in range(NB_LINES):
     for col in range(NB_COLS):
         centre = (X0+col*SIDE, Y0+ligne*SIDE)
-        if (centre[0] + centre[1]) % 2 == 0:
+        if col == 2 and ligne == 6:
             can0.create_image(centre, image=pionNoir)
         else:
             can0.create_image(centre, image=tourNoir)
