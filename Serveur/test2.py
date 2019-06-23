@@ -5,7 +5,7 @@ import re
 
 def pointeur(event=None):
     print(f"Click en X = {str((event.x // PICT_SIZE) + 1)}, Click en Y = {str((event.y // PICT_SIZE) + 1)}")
-    coord = (f"{((event.x // PICT_SIZE) + 1)}{((event.y // PICT_SIZE) + 1)}")
+    coord = (f"{((event.x // SIDE) + 1)}{((event.y // SIDE) + 1)}")
     test.set(coord)
     kesako(test.get())
     return coord
@@ -13,7 +13,7 @@ def pointeur(event=None):
 def kesako(coord):
     for i in range(len(liste)):
         if int(coord) == liste[i][2]:
-            print(liste[i][3])
+            print(liste[i][4])
 
 def verifPiece(i,str):
     x = re.search(str, liste[i][3])
