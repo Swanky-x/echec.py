@@ -2,6 +2,24 @@ from tkinter import *
 from random import randrange
 import re
 
+
+def pointeur(event=None):
+    print(f"Click en X = {str((event.x // PICT_SIZE) + 1)}, Click en Y = {str((event.y // PICT_SIZE) + 1)}")
+    coord = (f"{((event.x // PICT_SIZE) + 1)}{((event.y // PICT_SIZE) + 1)}")
+    test.set(coord)
+    kesako(test.get())
+    return coord
+
+def kesako(coord):
+    for i in range(len(liste)):
+        if int(coord) == liste[i][2]:
+            print(liste[i][3])
+
+def verifPiece(i,str):
+    x = re.search(str, liste[i][3])
+    if (x):
+        return x.string
+
 liste = [[1,'blanc',11,'tourb1','tour'],
 [2,'blanc',21,'cavalierb1','cavalier'],
 [3,'blanc',31,'foub1','fou'],
@@ -51,6 +69,8 @@ for i in liste2:
         col2.append(a)
         ligne2.append(b)
 
+# col2 = col2[::1]
+# ligne2 = ligne2[::1]
 
 PICT_SIZE = 66
 PAD = 1
@@ -64,6 +84,7 @@ X0 = Y0 = SIDE // 2
 
 FenPrincpale = Tk()
 can0 = Canvas(FenPrincpale, width=WIDTH, height=HEIGHT, background="black")
+can0.bind("<Button-1>", pointeur)
 can0.pack()
 
 caseNoir = PhotoImage(file="img/noir.png")
@@ -89,61 +110,61 @@ for ligne in range(NB_LINES):
         else:
             can0.create_image(centre, image=caseNoir)
 
-def test(i,str):
-    x = re.search(str, liste[i][3])
-    if (x):
-        return x.string
 
-ligne3 = 0
-while ligne3//4 <= 31 :
-    print(ligne3)
-    for ligne in range(NB_LINES):
-        # print(ligne2[ligne])
-        for col in range(NB_COLS):
-            centre = (X0+col*SIDE, Y0+ligne*SIDE)
-            if col == (int(col2[col])) and ligne == (int(ligne2[ligne3//4])):
-                for i in range(len(liste)):
-                    # ** piece noir
-                    if liste[i][3] == test(i, "^cav(.)+n(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=cavalierNoir)
-                    if liste[i][3] == test(i, "^tou(.)+n(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=tourNoir)
-                    if liste[i][3] == test(i, "^fou(.)?n(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=fouNoir)
-                    if liste[i][3] == test(i, "^ro(.)+n(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=roiNoir)
-                    if liste[i][3] == test(i, "^re(.)+en(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=reineNoir)
-                    if liste[i][3] == test(i, "^pi(.)+nn(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=pionNoir)
-                    # ** Piece blanche
-                    if liste[i][3] == test(i, "^cav(.)+b(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=cavalierBlanc)
-                    if liste[i][3] == test(i, "^tou(.)+b(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=tourBlanc)
-                    if liste[i][3] == test(i, "^fou(.)?b(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=fouBlanc)
-                    if liste[i][3] == test(i, "^ro(.)+b(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=roiBlanc)
-                    if liste[i][3] == test(i, "^re(.)+eb(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=reineBlanc)
-                    if liste[i][3] == test(i, "^pi(.)+nb(.)?"):
-                        if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
-                            can0.create_image(centre, image=pionBlanc)
+def placementPiece(liste) :
+    ligne3 = 0
+    while ligne3//4 <= 31 :
+        #print(ligne3)
+        for ligne in range(NB_LINES):
+            # print(ligne2[ligne])
+            for col in range(NB_COLS):
+                centre = (X0+col*SIDE, Y0+ligne*SIDE)
+                if col == (int(col2[col])) and ligne == (int(ligne2[ligne3//4])):
+                    for i in range(len(liste)):
+                        # ** piece noir
+                        if liste[i][3] == verifPiece(i, "^cav(.)+n(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=cavalierNoir)
+                        if liste[i][3] == verifPiece(i, "^tou(.)+n(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=tourNoir)
+                        if liste[i][3] == verifPiece(i, "^fou(.)?n(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=fouNoir)
+                        if liste[i][3] == verifPiece(i, "^ro(.)+n(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=roiNoir)
+                        if liste[i][3] == verifPiece(i, "^re(.)+en(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=reineNoir)
+                        if liste[i][3] == verifPiece(i, "^pi(.)+nn(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=pionNoir)
+                        # ** Piece blanche
+                        if liste[i][3] == verifPiece(i, "^cav(.)+b(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=cavalierBlanc)
+                        if liste[i][3] == verifPiece(i, "^tou(.)+b(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=tourBlanc)
+                        if liste[i][3] == verifPiece(i, "^fou(.)?b(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=fouBlanc)
+                        if liste[i][3] == verifPiece(i, "^ro(.)+b(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=roiBlanc)
+                        if liste[i][3] == verifPiece(i, "^re(.)+eb(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=reineBlanc)
+                        if liste[i][3] == verifPiece(i, "^pi(.)+nb(.)?"):
+                            if liste[i][2] == int(f"{(int(col2[col])+1)}{(int(ligne2[ligne3//4])+1)}"):
+                                can0.create_image(centre, image=pionBlanc)
 
-    ligne3 += 1
+        ligne3 += 1
 
+
+test = IntVar()
+placementPiece(liste)
 
 
 FenPrincpale.mainloop()

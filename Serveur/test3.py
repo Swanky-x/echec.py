@@ -41,18 +41,21 @@ col = []
 ligne = []
 
 for i in liste2:
-    print(i)
+    #print(i)
     for y in i:
-        print(y)
+        #print(y)
         a = y[0]
         b = y[1]
         col.append(a)
         ligne.append(b)
-        print(a)
-
+        #print(a)
 
 print(col)
-print(ligne)
+
+col = col[::-1]
+
+print(col)
+#print(ligne)
 
 
 
