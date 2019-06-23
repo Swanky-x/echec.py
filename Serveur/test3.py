@@ -41,7 +41,7 @@ col = []
 ligne = []
 
 for i in liste2:
-    print(i) 
+    print(i)
     for y in i:
         print(y)
         a = y[0]
@@ -53,7 +53,7 @@ for i in liste2:
 
 print(col)
 print(ligne)
-    
+
 
 
 
