@@ -82,6 +82,22 @@ def laCaseEstVide(position):
     if len(a)>0: return False
     else: return True
 
+def updatePosition(position,nouvellePosition):
+    conn = psycopg2.connect (
+        database = "jeuxechec",
+        user = "echec",
+        password = "echec",
+        host = "127.0.0.1",
+        port = "5432"
+        )
+    cursor = conn.cursor()
+    cursor.execute("UPDATE position SET position ='"+nouvellePosition+"' WHERE position ='"+position+"'")
+    a = cursor.fetchone()
+    cursor.close()
+    conn.commit()
+    conn.close()
+    if len(a)>0: return False
+    else: return True
 
 #prise du pion
 def prisePion(pieceActive):
@@ -386,9 +402,13 @@ def bougeLaPiece(active, destination):
     # regarder dans la BDD si la case de destination est occupée par une pièce adverse
     # si oui, passer la valeur "enJeu" de cette pièce en False (requete avec where case = destination)
     # sinon, mettre à jour piece.position
-    # 
+    if laCaseEstVide(destination):
+        updatePosition(active.position, destination)
+    else:
+        updatePosition(position, 'null')
+        updatePosition(active.position, destination)
     # bouger notre pièce vers la nouvelle case (changer la valeur des coordonnées dans la bdd)
-    pass
+
 
 
 #à la fin de chaque tour on vérifie si les rois sont en échecs ou non
@@ -398,7 +418,7 @@ def checkchess(couleur):
     # avec une requete sql, pour la couleur demandé
     # on crée un objet avec
     # leRoi=...
-
+    #
     # on change son type pour utiliser la fonction des trajectoires
     # et regarder si on a une pièce menaçante (type et couleur) au bout
     # PAR EXEMPLE ON PASSE EN CAVALIER
@@ -425,17 +445,18 @@ def checkchess(couleur):
         if False: # regarder dans la bdd si on a une pièce sur la case i un pion
             # à tester sur i.pop() la dernière case
             return True
-
     # on regarde si il est menacé par une pière adverse
     # en diagonale, si on trouve un fou ou une reine
     # il faut utiliser les fonctions de mouvement et de trajectoire
-
+    #
     # en droite pour voir si on trouve une tour ou une reine
     # en diagonale à une case vers l'avant si on trouve un pion
-
+    #
     #en le déplaçant comme un cavalier voir si on trouve un cavalier adverse
     # on retourne True ou False en fonction du résultat
-    pass
+    #
+    # Si not True, alors False
+    return False
 
 
 #POUR TESTER AVANT D AVOIR TOUT FINI
