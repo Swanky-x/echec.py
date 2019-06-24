@@ -66,6 +66,21 @@ def couleur(idPiece):
     conn.close()
     return a
 
+def checkType(position):
+    conn = psycopg2.connect (
+        database = "jeuxechec",
+        user = "echec",
+        password = "echec",
+        host = "127.0.0.1",
+        port = "5432"
+        )
+    cursor = conn.cursor()
+    cursor.execute("SELECT type from pieces FULL JOIN position ON pieces.id_pieces = position.id_piece WHERE position ='"+position+"'")
+    a = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return a
+
 def laCaseEstVide(position):
     conn = psycopg2.connect (
         database = "jeuxechec",
@@ -418,31 +433,31 @@ def checkchess(couleur):
     # avec une requete sql, pour la couleur demandé
     # on crée un objet avec
     # leRoi=...
-    #
+    
     # on change son type pour utiliser la fonction des trajectoires
     # et regarder si on a une pièce menaçante (type et couleur) au bout
     # PAR EXEMPLE ON PASSE EN CAVALIER
     leRoi.typePiece='cavalier'
     test=lesTrajectoiresValides(leRoi)
     for i in test:
-        if False:# regarder dans la bdd si on a une pièce sur la case i qui est un cavalier d'une couleur différente
+        if checkType(i.pop())==leRoi.typePiece:# regarder dans la bdd si on a une pièce sur la case i qui est un cavalier d'une couleur différente
             return True
     leRoi.typePiece='Tour'
     test=lesTrajectoiresValides(leRoi)
     for i in test:
-        if False: # regarder dans la bdd si on a une pièce sur la case i qui est une tour ou reine d'une couleur différente
+        if checkType(i.pop())==leRoi.typePiece: # regarder dans la bdd si on a une pièce sur la case i qui est une tour ou reine d'une couleur différente
             # à tester sur i.pop() la dernière case
             return True   
     leRoi.typePiece='Fou'
     test=lesTrajectoiresValides(leRoi)
     for i in test:
-        if False: # regarder dans la bdd si on a une pièce sur la case i qui est une tour ou reine d'une couleur différente
+        if checkType(i.pop())==leRoi.typePiece: # regarder dans la bdd si on a une pièce sur la case i qui est une tour ou reine d'une couleur différente
             # à tester sur i.pop() la dernière case
             return True
     leRoi.typePiece='prisePion'
     test=lesTrajectoiresValides(leRoi)
     for i in test:
-        if False: # regarder dans la bdd si on a une pièce sur la case i un pion
+        if checkType(i.pop())==leRoi.typePiece: # regarder dans la bdd si on a une pièce sur la case i un pion
             # à tester sur i.pop() la dernière case
             return True
     # on regarde si il est menacé par une pière adverse
