@@ -3,7 +3,7 @@ import http.server
 
 
 # Serveur http de base delivrant le contenu du repertoire courant via le port indique.
-port = 8080
+port = 9080
 adress = ("", port)
 server = http.server.HTTPServer
 

@@ -41,6 +41,11 @@ if form.getvalue("send") == "Sign In":
     if "pseudo" not in form or "password" not in form:
         print(f"<H1>Erreur</H1>")
         print(f"<p>Donnez un pseudo et un mot de passe.</p>")
+        html = """
+        <a href="index.py">Retour</a>
+        """
+        print(html)
+
 
     else :
         conn = psycopg2.connect (
@@ -71,8 +76,17 @@ if form.getvalue("send") == "Sign In":
 
             else:
                 print(f"<p>Login et mod de passe ne correspondent pas</p>")
+                html = """
+                <a href="index.py">Retour</a>
+                """
+                print(html)
+
         else:
             print(f"<p>Identifiant/MDP incorect, ré-essayer !</p>")
+            html = """
+            <a href="index.py">Retour</a>
+            """
+            print(html)            
         
         cursor.close()
         conn.close()
@@ -94,6 +108,10 @@ else:
     if "c_pseudo" not in form or "c_password" not in form or "c_email" not in form: 
         print(f"<H1>Erreur</H1>")
         print(f"<p>Tous les champs sont obligatoires à la création du compte.</p>")
+        html = """
+        <a href="index.py">Retour</a>
+        """
+        print(html)        
 
     else :
         conn = psycopg2.connect (
@@ -115,9 +133,17 @@ else:
             cursor.close()
             conn.close()
             print(f"<p>Votre comte à bien été créé</p>")
+            html = """
+            <a href="index.py">Se connecter</a>
+            """
+            print(html)            
         
         else:
             print(f"<p>le pseudo existe déjà.</p>")
+            html = """
+            <a href="index.py">Retour</a>
+            """
+            print(html)            
 
 # EO - Tunnel de création de compte       
 ######################################
