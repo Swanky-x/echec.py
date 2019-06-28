@@ -259,13 +259,13 @@ def mvtPlateau(pieceActive):
 
 #check mouvement vérifie que la caseArrivee est sur les trajectoire de la pièce
 def checkmvt(pieceActive, caseArrivee):
-    temp=mvtPlateau(pieceActive)
-    if caseArrivee in temp:
-        print ("mouvement correct")
-        return True
-    else:
-        print("mouvement interdit")
-        return False
+        temp=mvtPlateau(pieceActive)
+        if caseArrivee in temp:
+            print ("mouvement correct")
+            return True
+        else:
+            print("mouvement interdit")
+            return False
 
 def lesTrajectoires(pieceActive):
     # if not checkmvt(pieceActive,caseArrivee):
@@ -330,22 +330,22 @@ def lesTrajectoiresValides(pieceActive):
     pattern=[]
     for i in lesTrajectoires(pieceActive):
         print("on va regarder la trajectoire ", i)
-        
+        temp=[]
         if type(i)==type([]):
             for j in i:
                 print("on regarde la case ",j)
-                temp=[]
                 # pour savoir si il y a une pièce dessus on regarde avec rowcount
                 # https://openclassrooms.com/forum/sujet/savoir-si-une-requete-sql-renvoie-des-informations-53841
                 if j in cadre:
                     print("la case est dans le cadre")
                     if laCaseEstVide(j):
                         temp.append(j)
-                else:
-                    if pieceActive.couleur!=couleur(checkPosition(j)):
-                        temp.append(j)
                     else:
-                        break
+                        if pieceActive.couleur!=couleur(checkPosition(j)):
+                            temp.append(j)
+                            break
+                        else:
+                            break
             pattern.append(temp)
         else:
             print("on va regarder la case unique de la trajectoir ",i)
@@ -474,11 +474,11 @@ def checkchess(couleur):
     return False
 
 
-#POUR TESTER AVANT D AVOIR TOUT FINI
-active=piece('blanc','pion',52)
-# mvt(active)
-# checkmvt(active, 55)
-#leChemin(active,26)
-#lesTrajectoires(active)
-lesTrajectoiresValides(active)
-#leChemin(active, 23)
+# #POUR TESTER AVANT D AVOIR TOUT FINI
+# active=piece('blanc','pion',52)
+# # mvt(active)
+# # checkmvt(active, 55)
+# #leChemin(active,26)
+# #lesTrajectoires(active)
+# lesTrajectoiresValides(active)
+# #leChemin(active, 23)

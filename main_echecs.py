@@ -368,7 +368,7 @@ def checkchess(couleur):
 
 
 #POUR TESTER AVANT D AVOIR TOUT FINI
-active=piece('blanc','pion',52)
+active=piece('blanc','tour',52)
 # mvt(active)
 # checkmvt(active, 55)
 #leChemin(active,26)
