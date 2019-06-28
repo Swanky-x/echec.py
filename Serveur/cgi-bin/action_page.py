@@ -6,13 +6,12 @@ from tkinter import *
 from random import randrange
 import re
 
+# Module de DEBUG
 import cgitb
 cgitb.enable()
 
-form = cgi.FieldStorage()
 print("Content-Type: text/html")
 print()
-
 conn = psycopg2.connect (
     database = "jeuxechec",
     user = "echec",
@@ -21,11 +20,12 @@ conn = psycopg2.connect (
     port = "5432"
 )
 
-
+# Liste des pieces en position initiales 
 cursor = conn.cursor()
 cursor.execute("SELECT id_piece, couleur, position, type, nom FROM pieces")
 pions = cursor.fetchall()
 
+# Transforme Tuple en listes 2D
 liste = []
 for i in pions :
     tmp = list(i)

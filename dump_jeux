@@ -1,0 +1,362 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.9 (Ubuntu 10.9-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 10.9 (Ubuntu 10.9-0ubuntu0.18.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: jeux; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.jeux (
+    id_partie integer NOT NULL,
+    id_joueur1 integer,
+    id_joueur2 integer
+);
+
+
+ALTER TABLE public.jeux OWNER TO postgres;
+
+--
+-- Name: joueurs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.joueurs (
+    id_joueur integer NOT NULL,
+    pseudo text,
+    mdp character varying,
+    email character varying
+);
+
+
+ALTER TABLE public.joueurs OWNER TO postgres;
+
+--
+-- Name: joueurs_id_joueur_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.joueurs_id_joueur_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.joueurs_id_joueur_seq OWNER TO postgres;
+
+--
+-- Name: joueurs_id_joueur_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.joueurs_id_joueur_seq OWNED BY public.joueurs.id_joueur;
+
+
+--
+-- Name: pieces; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pieces (
+    id_piece integer NOT NULL,
+    couleur character varying NOT NULL,
+    "position" integer NOT NULL,
+    type text NOT NULL,
+    nom text NOT NULL
+);
+
+
+ALTER TABLE public.pieces OWNER TO postgres;
+
+--
+-- Name: pieces_id_piece_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.pieces_id_piece_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pieces_id_piece_seq OWNER TO postgres;
+
+--
+-- Name: pieces_id_piece_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.pieces_id_piece_seq OWNED BY public.pieces.id_piece;
+
+
+--
+-- Name: position; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."position" (
+    id_piece integer,
+    id_partie integer NOT NULL,
+    id_joueur integer,
+    "position" text
+);
+
+
+ALTER TABLE public."position" OWNER TO postgres;
+
+--
+-- Name: save; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.save (
+    id_partie integer NOT NULL,
+    link text
+);
+
+
+ALTER TABLE public.save OWNER TO postgres;
+
+--
+-- Name: joueurs id_joueur; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.joueurs ALTER COLUMN id_joueur SET DEFAULT nextval('public.joueurs_id_joueur_seq'::regclass);
+
+
+--
+-- Name: pieces id_piece; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pieces ALTER COLUMN id_piece SET DEFAULT nextval('public.pieces_id_piece_seq'::regclass);
+
+
+--
+-- Data for Name: jeux; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.jeux (id_partie, id_joueur1, id_joueur2) FROM stdin;
+1	1	2
+\.
+
+
+--
+-- Data for Name: joueurs; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.joueurs (id_joueur, pseudo, mdp, email) FROM stdin;
+14	xavier	$2a$12$r4xsEwDKqJP3soUm5cDoteiGthezvFyIAEf0TKTceg2fq7HUyTeeK	xavier@fjhds.fr
+15	test28	$2a$12$xV.1KdYqF8XgOVVXrFBw/eNDhMD.dHLXlarT0Zi2r.EJgg43GJCuC	xszee@eeds.fr
+16	eeee	$2a$12$oMl7xWo5j/89K3cEO1NR5.JbGPd8Fg7lyWPRyF0xgbzH7JoajzJ3m	xavier@fjhds.fr
+17	bkoj	$2a$12$sYAeoPV6dl7.DHkQ8/11u.fJVLTMO7Hf64i2kB1NwJ3C2oquqjsDy	formation@localhost.fr
+\.
+
+
+--
+-- Data for Name: pieces; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pieces (id_piece, couleur, "position", type, nom) FROM stdin;
+1	blanc	11	tourb1	tour
+2	blanc	21	cavalierb1	cavalier
+3	blanc	31	foub1	fou
+4	blanc	41	reineb	queen
+5	blanc	51	roib	king
+6	blanc	61	foub2	fou
+7	blanc	71	cavalierb2	cavalier
+8	blanc	81	tourb2	tour
+9	blanc	12	pionb1	pion
+10	blanc	22	pionb2	pion
+11	blanc	32	pionb3	pion
+12	blanc	42	pionb4	pion
+13	blanc	52	pionb5	pion
+14	blanc	62	pionb6	pion
+15	blanc	72	pionb7	pion
+16	blanc	82	pionb8	pion
+17	noir	18	tourn1	tour
+18	noir	28	cavaliern1	cavalier
+19	noir	38	foun1	fou
+20	noir	48	reinen	queen
+21	noir	58	roin	king
+22	noir	68	foun2	fou
+23	noir	78	cavaliern2	cavalier
+24	noir	88	tourn2	tour
+25	noir	17	pionn1	pion
+26	noir	27	pionn2	pion
+27	noir	37	pionn3	pion
+28	noir	47	pionn4	pion
+29	noir	57	pionn5	pion
+30	noir	67	pionn6	pion
+31	noir	77	pionn7	pion
+32	noir	87	pionn8	pion
+\.
+
+
+--
+-- Data for Name: position; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."position" (id_piece, id_partie, id_joueur, "position") FROM stdin;
+\.
+
+
+--
+-- Data for Name: save; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.save (id_partie, link) FROM stdin;
+\.
+
+
+--
+-- Name: joueurs_id_joueur_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.joueurs_id_joueur_seq', 17, true);
+
+
+--
+-- Name: pieces_id_piece_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.pieces_id_piece_seq', 32, true);
+
+
+--
+-- Name: jeux jeux_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.jeux
+    ADD CONSTRAINT jeux_pkey PRIMARY KEY (id_partie);
+
+
+--
+-- Name: joueurs joueurs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.joueurs
+    ADD CONSTRAINT joueurs_pkey PRIMARY KEY (id_joueur);
+
+
+--
+-- Name: pieces pieces_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pieces
+    ADD CONSTRAINT pieces_pkey PRIMARY KEY (id_piece);
+
+
+--
+-- Name: position position_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."position"
+    ADD CONSTRAINT position_pkey PRIMARY KEY (id_partie);
+
+
+--
+-- Name: save save_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.save
+    ADD CONSTRAINT save_pkey PRIMARY KEY (id_partie);
+
+
+--
+-- Name: position position_id_partie_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."position"
+    ADD CONSTRAINT position_id_partie_fkey FOREIGN KEY (id_partie) REFERENCES public.jeux(id_partie);
+
+
+--
+-- Name: position position_id_piece_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."position"
+    ADD CONSTRAINT position_id_piece_fkey FOREIGN KEY (id_piece) REFERENCES public.pieces(id_piece);
+
+
+--
+-- Name: save save_id_partie_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.save
+    ADD CONSTRAINT save_id_partie_fkey FOREIGN KEY (id_partie) REFERENCES public.jeux(id_partie);
+
+
+--
+-- Name: TABLE jeux; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,INSERT,UPDATE ON TABLE public.jeux TO echec;
+
+
+--
+-- Name: TABLE joueurs; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON TABLE public.joueurs TO echec;
+
+
+--
+-- Name: SEQUENCE joueurs_id_joueur_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT ALL ON SEQUENCE public.joueurs_id_joueur_seq TO echec;
+
+
+--
+-- Name: TABLE pieces; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT ON TABLE public.pieces TO echec;
+
+
+--
+-- Name: TABLE "position"; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,INSERT,UPDATE ON TABLE public."position" TO echec;
+
+
+--
+-- Name: TABLE save; Type: ACL; Schema: public; Owner: postgres
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE public.save TO echec;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

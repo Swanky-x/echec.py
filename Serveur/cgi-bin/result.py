@@ -4,6 +4,7 @@ import cgi
 import psycopg2
 import bcrypt
 
+# Module de DEBUG
 import cgitb
 cgitb.enable()
 
@@ -26,11 +27,10 @@ html = """<!DOCTYPE html>
 </head>
 <body>"""
 print(html)
+
 form = cgi.FieldStorage()
 
-
 if form.getvalue("send") == "Sign In":
-
     ######################################
     # Tunnel de connexion LOGIN
 
@@ -145,8 +145,8 @@ else:
             """
             print(html)            
 
-# EO - Tunnel de création de compte       
-######################################
+    # EO - Tunnel de création de compte       
+    ######################################
 
 
 html="""
