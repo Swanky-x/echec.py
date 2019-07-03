@@ -45,3 +45,11 @@ __________________________________
 * from random import randrange
 * import re
 
+____________________________________
+
+##### TODO
+* intégration de CloudTk pour affichage distant de Tkinter
+* http://cloudtk.tcl-lang.org/
+* https://wiki.tcl-lang.org/page/CloudTk
+
+
